@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        header{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(3, 3, 254);
+            width: 100%;
+            height: 50px;
+        }
+        h1{
+            color: white;
+            text-align: center;
+            padding-top: 8px;
+        }
+        .container{
+            background-color: lightgray;
+            height: 500px;
+            width: 750px;
+            margin-left: 400px;
+            margin-top: 65px;
+        }
+        #col1{grid-area: col1;}
+        #col2{grid-area: col2;}
+        .box{
+            display: grid;
+            grid-template-areas: 'col1 col2';
+        }
+        #col1{
+            background-color: white;
+            height: 400px;
+            margin-top: 50px;
+            margin-left: 50px;
+            margin-bottom: 50px;
+            width: 300px;
+            border-radius: 20px;
+            box-shadow: 10px 10px 10px grey;
+        }
+        #col2{
+            background-color: white;
+            height: 400px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            margin-left: 20px;
+            width: 300px;
+            border-radius: 20px;
+            box-shadow: 10px 10px 10px grey;
+        }
+        h2{
+            text-align: center;
+            padding-top:15px ;
+        }
+        input{
+            margin-left: 20px;
+            margin-top: 10px;
+            width: 250px;
+        }
+        label{
+            margin-left: 20px;
+
+        }
+        button{
+            margin-left: 20px;
+            margin-top: 20px;
+            font-size: 15px;
+            color: white;
+            background-color: rgb(3, 3, 254);
+            padding: 5px;
+            border: transparent;
+        }
+        p{
+            margin-left: 20px;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+        select{
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        footer{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(3, 3, 254);
+            width: 100%;
+            height: 50px;
+            margin-top: 66px;
+        }
+        h3{
+            color: white;
+            text-align: center;
+            padding-top: 13px;  
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Age and Distance Calculator</h1>
+    </header>
+    <div class="container">
+        <div class="box">
+            <div id="col1">
+                <h2>Age Calculator</h2><br>
+                <label for="dob">Date of Birth:</label> <br>
+                <input type="date" id="dobInput">
+                <br>
+                <button id="ageButton" onclick="calculateAge()">Calculate Age</button> 
+                <p>Age in Years:<span id="Years"></span> </p>
+                <p>Age in Months:<span id="Months"></span> </p>
+                <p>Age in hours:<span id="Hours"></span> </p>
+                <p>Age in minutes:<span id="Minutes"></span> </p>
+                <p>Age in seconds:<span id="Seconds"></span> </p>
+            </div>
+            <div id="col2">
+                <h2>Distance Calculator</h2>
+                <label for="distance">Distance:</label><br>
+                <input type="text"  id="distanceInput"><br>
+                <label for="unit">Unit:</label><br>
+                <select id="unitSelect">
+                    <option value="kilometers">Kilometers</option>
+                    <option value="meters">Meters</option>
+                    <option value="inches">Inches</option>
+                </select>
+                <br>
+                <button onclick="convertDistance()">Convert</button>
+                <br>
+                <p>Distance in Kilometers:<span id="km"></span></p>
+                <p>Distance in Meters:<span id="m"></span></p>
+                <p>Distance in Inches:<span id="in"></span></p>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <h3>&copy 2024 Age and Distance Converter. All rights reserved.</h3>
+    </footer>
+    <script>
+        function calculateAge() {
+            var dob = document.getElementById('dobInput').value;
+            var dateOfBirth = new Date(dob);
+            var today = new Date();
+            var ageInYears = today.getFullYear() - dateOfBirth.getFullYear();
+            var ageInMonths = ageInYears * 12 + (today.getMonth() - dateOfBirth.getMonth());
+        
+            var ageInHours = ageInYears * 365 * 24;
+            var ageInMinutes = ageInYears * 365 * 24 * 60;
+            var ageInSeconds = ageInYears * 365 * 24 * 60 * 60;
+        
+            document.getElementById('Years').textContent = ageInYears;
+            document.getElementById('Months').textContent = ageInMonths;
+            document.getElementById('Hours').textContent = ageInHours;
+            document.getElementById('Minutes').textContent = ageInMinutes;
+            document.getElementById('Seconds').textContent = ageInSeconds;
+        }
+
+        function convertDistance() {
+            var distance = parseFloat(document.getElementById('distanceInput').value);
+            var unit = document.getElementById('unitSelect').value;
+
+            if (unit === 'kilometers') {
+                document.getElementById('km').textContent = distance;
+                document.getElementById('m').textContent = distance * 1000;
+                document.getElementById('in').textContent = distance * 39370;
+            } else if (unit === 'meters') {
+                document.getElementById('km').textContent = distance / 1000;
+                document.getElementById('m').textContent = distance;
+                document.getElementById('in').textContent = distance * 39.370;
+            } else if (unit === 'inches') {
+                document.getElementById('km').textContent = distance / 39370;
+                document.getElementById('m').textContent = distance * 0.0254;
+                document.getElementById('in').textContent = distance;
+            }
+        }
+    </script>
+</body>
+</html>
